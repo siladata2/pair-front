@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#130F2A">
+<title>CIPHER MINI is under maintenance</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #130F2A;
+    --ink-raised: #1F1946;
+    --text: #EFEBFF;
+    --muted: #A9A3D0;
+    --violet: #8B6CFF;
+    --amber: #FFB938;
+
+    --display: "Unbounded", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+    --body: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body { height: 100%; margin: 0; }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100%;
+    display: grid;
+    place-items: center;
+    padding: max(2rem, env(safe-area-inset-top)) 1.5rem max(2rem, env(safe-area-inset-bottom));
+    isolation: isolate;
+  }
+
+  /* one soft light source behind the cipher wheel */
+  .stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background: radial-gradient(ellipse 60% 55% at 50% 48%, rgba(139, 108, 255, 0.22), transparent 70%);
+  }
+
+  /* ---------- cipher wheel ---------- */
+  .wheel {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: clamp(560px, 150vw, 900px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    opacity: 0.42;
+    pointer-events: none;
+  }
+  .wheel svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .ring { transform-origin: 50% 50%; }
+  .ring-outer { animation: spin 160s linear infinite; }
+  .ring-inner { animation: spin 110s linear infinite reverse; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .wheel text {
+    white-space: pre;
+    font-family: var(--display);
+    font-weight: 500;
+    fill: var(--violet);
+  }
+  .wheel .key { fill: var(--amber); }
+
+  /* ---------- content ---------- */
+  main {
+    width: 100%;
+    max-width: 40rem;
+    text-align: center;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 1rem 0.45rem 0.85rem;
+    border: 1px solid rgba(255, 185, 56, 0.35);
+    border-radius: 999px;
+    background: rgba(255, 185, 56, 0.08);
+    color: var(--amber);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .status i {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--amber);
+    box-shadow: 0 0 0 0 rgba(255, 185, 56, 0.6);
+    animation: pulse 2.2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(255, 185, 56, 0.55); }
+    70%  { box-shadow: 0 0 0 0.7rem rgba(255, 185, 56, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 185, 56, 0); }
+  }
+
+  h1 {
+    margin: 1.75rem 0 0;
+    font-family: var(--display);
+    font-weight: 800;
+    font-size: clamp(2.8rem, 15vw, 6.75rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+  h1 .line { display: block; white-space: nowrap; }
+  h1 .ch { display: inline-block; text-align: center; }
+
+  .lede {
+    margin: 1.25rem 0 0;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: clamp(1.05rem, 3.6vw, 1.5rem);
+    letter-spacing: -0.01em;
+    color: var(--text);
+  }
+
+  .note {
+    margin: 1.25rem auto 0;
+    max-width: 30rem;
+    color: var(--muted);
+  }
+
+  .actions {
+    margin-top: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  button {
+    appearance: none;
+    border: 0;
+    cursor: pointer;
+    padding: 0.9rem 2rem;
+    border-radius: 0.9rem;
+    background: var(--amber);
+    color: #2A1A00;
+    font: 700 1rem/1 var(--body);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+  button:hover { background: #FFC85F; }
+  button:active { transform: translateY(1px); }
+  button:disabled { opacity: 0.7; cursor: progress; }
+  button:focus-visible, a:focus-visible {
+    outline: 3px solid var(--text);
+    outline-offset: 3px;
+  }
+
+  .hint {
+    margin: 0;
+    min-height: 1.6em;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  footer {
+    position: absolute;
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    .wheel { opacity: 0.28; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ring-outer, .ring-inner, .status i { animation: none; }
+    button { transition: none; }
+  }
+</style>
+</head>
+
+<body>
+<div class="stage">
+
+  <!-- decorative Caesar cipher wheel: inner ring is shifted by 3 -->
+  <div class="wheel" aria-hidden="true">
+    <svg viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <path id="p-outer" d="M 300,300 m -262,0 a 262,262 0 1,1 524,0 a 262,262 0 1,1 -524,0"/>
+        <path id="p-inner" d="M 300,300 m -212,0 a 212,212 0 1,1 424,0 a 212,212 0 1,1 -424,0"/>
+      </defs>
+      <circle cx="300" cy="300" r="292" fill="none" stroke="#8B6CFF" stroke-opacity="0.35" stroke-width="1"/>
+      <circle cx="300" cy="300" r="236" fill="none" stroke="#8B6CFF" stroke-opacity="0.35" stroke-width="1"/>
+      <circle cx="300" cy="300" r="188" fill="none" stroke="#8B6CFF" stroke-opacity="0.25" stroke-width="1"/>
+      <g class="ring ring-outer">
+        <text font-size="19"><textPath href="#p-outer" textLength="1640" lengthAdjust="spacing">A B C D E F G H I J K L M N O P Q R S T U V W X Y Z </textPath></text>
+      </g>
+      <g class="ring ring-inner">
+        <text font-size="15" class="key"><textPath href="#p-inner" textLength="1326" lengthAdjust="spacing">D E F G H I J K L M N O P Q R S T U V W X Y Z A B C </textPath></text>
+      </g>
+    </svg>
+  </div>
+
+  <main>
+    <div class="status"><i aria-hidden="true"></i>Maintenance in progress</div>
+
+    <h1 id="title" aria-label="CIPHER MINI">
+      <span class="line" aria-hidden="true" data-text="CIPHER">CIPHER</span>
+      <span class="line" aria-hidden="true" data-text="MINI">MINI</span>
+    </h1>
+
+    <p class="lede">is under maintenance</p>
+
+    <p class="note">We’re making improvements behind the scenes. Everything will be back shortly. Thank you for your patience.</p>
+
+    <div class="actions">
+      <button id="retry" type="button">Try again</button>
+      <p class="hint" id="hint" role="status" aria-live="polite">This page checks automatically every 30 seconds.</p>
+    </div>
+  </main>
+
+  <footer>SILA TECH</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- headline: letters decrypt into the name ---------- */
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&?";
+  var chars = [];
+
+  document.querySelectorAll("#title .line").forEach(function (line) {
+    var text = line.dataset.text;
+    line.textContent = "";
+    for (var i = 0; i < text.length; i++) {
+      var s = document.createElement("span");
+      s.className = "ch";
+      s.textContent = text[i];
+      s.dataset.final = text[i];
+      line.appendChild(s);
+      chars.push(s);
+    }
+  });
+
+  function decrypt() {
+    // freeze each letter's width so scrambling never shifts the layout
+    chars.forEach(function (c) { c.style.width = c.getBoundingClientRect().width + "px"; });
+
+    var start = performance.now();
+    var plan = chars.map(function (c, i) {
+      return { el: c, done: 500 + i * 110 + Math.random() * 220, last: 0 };
+    });
+
+    function frame(now) {
+      var t = now - start, pending = 0;
+      plan.forEach(function (p) {
+        if (t >= p.done) {
+          p.el.textContent = p.el.dataset.final;
+        } else {
+          pending++;
+          if (now - p.last > 55) {
+            p.el.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+            p.last = now;
+          }
+        }
+      });
+      if (pending) requestAnimationFrame(frame);
+      else chars.forEach(function (c) { c.style.width = ""; });
+    }
+    requestAnimationFrame(frame);
+  }
+
+  if (!reduce) {
+    var fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 1500); })]).then(decrypt);
+  }
+
+  /* ---------- check whether the service is back ---------- */
+  var btn = document.getElementById("retry");
+  var hint = document.getElementById("hint");
+  var busy = false;
+
+  function check(manual) {
+    if (busy) return;
+    busy = true;
+    if (manual) { btn.disabled = true; hint.textContent = "Checking…"; }
+
+    fetch("/", { cache: "no-store", headers: { "X-Maintenance-Check": "1" } })
+      .then(function (r) {
+        if (r.status !== 503) { window.location.reload(); return; }
+        if (manual) hint.textContent = "Still under maintenance. We’ll keep checking for you.";
+      })
+      .catch(function () {
+        if (manual) hint.textContent = "Still under maintenance. We’ll keep checking for you.";
+      })
+      .then(function () { busy = false; btn.disabled = false; });
+  }
+
+  btn.addEventListener("click", function () { check(true); });
+  setInterval(function () { check(false); }, 30000);
+})();
+</script>
+</body>
+</html>
