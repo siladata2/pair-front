@@ -8,7 +8,7 @@ const app = express();
 // Target app. You can override it with the TARGET_URL environment variable.
 const TARGET =
   process.env.TARGET_URL ||
-  "https://aaaaacicphermin-635fa3db86a6.herokuapp.com/";
+  "https://aaaamd-pair-6c2b0a32a46f.herokuapp.com/";
 
 // Statuses that mean "the target is down" (crashed, sleeping, timed out...).
 const DOWN_STATUS = new Set([502, 503, 504]);
